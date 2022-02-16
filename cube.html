@@ -1,0 +1,363 @@
+
+
+<head>
+
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="cube1.css">
+</head>
+
+<body>
+
+<!-- Cubes -->
+
+<div class="cubeContainer">
+  <div class="cube">
+  <div class="face front"><p class="hidden">1</p></div>
+  <div class="face back"><p class="hidden">2</p></div>
+  <div class="face top"><p class="hidden">3</p></div>
+  <div class="face bottom"><p class="hidden">4</p></div>
+  <div class="face left"><p class="hidden">5</p></div>
+  <div class="face right"><p class="hidden">6</p></div>
+  </div>
+</div>
+
+<div id="loading-txt">
+  Loading...
+</div>
+
+<div class="cubeContainer2">
+  <div class="cube2">
+  <div class="face front2"></div>
+  <div class="face back2"></div>
+  <div class="face top2"></div>
+  <div class="face bottom2"></div>
+  <div class="face left2"></div>
+  <div class="face right2"></div>
+  </div>
+</div>
+
+<!------------------------>
+
+
+
+<div id="menu" class="hidden">
+  <button id="start">Start Game</button>
+  <button id="creditsbtn">Credits</button>
+  <button id="quit">Quit</button>
+</div> 
+
+
+<div id="credits" class="hidden">
+  <p>Dice Game</p>
+  <p>designed by Ayham Suliman</p>
+  <p>Thank you for playing</p>
+  <p>email : ayham77780@gmail.com</p>
+</div>
+<button id="stopDice" class="hidden">Stop Dice</button>
+<p id="score" class="hidden">Your score is : </p>
+<button id="play" class="hidden">Throw Dice</button>
+<button id="back7" class="hidden">Back</button>
+
+
+<!--------- the script ------------>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+<script>
+/* loading program */
+const face = document.querySelector('.face');
+const cubeContainer = document.querySelector('.cubeContainer');
+const front = document.querySelector('.front');
+const back = document.querySelector('.back');
+const left = document.querySelector('.left');
+const right = document.querySelector('.right');
+const top1 = document.querySelector('.top');
+const bottom = document.querySelector('.bottom');
+const cube = document.querySelector('.cube');
+const score = document.querySelector('#score');
+const frontP = document.querySelector('.front p');
+const playBtn = document.querySelector('#play');
+const backBtn = document.querySelector('#back7');
+let scooore = 0;
+let counter = 0;
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      $('#loading-txt').fadeOut(1500, function() {
+        transform();
+
+       setTimeout(function() {
+        $('#menu').fadeIn(700);
+       }, 3500);
+     
+
+      });
+    }, 5000);
+  });
+
+
+
+$('#creditsbtn').click(function() {
+  $('#menu').fadeOut(600, function() {
+    $('#credits').fadeIn(600, function() {
+      setTimeout(function() {
+        $('#credits').fadeOut(700, function() {
+          $('#menu').fadeIn(600);
+        });
+      }, 5000);
+    });
+  });
+});
+
+
+
+
+$('#quit').click(function() {
+  setTimeout(function() {
+    $('#menu').fadeOut(700, function() {
+      transform2();
+      setTimeout(function() {
+        front.style.boxShadow = '0 0 70px white';
+        back.style.boxShadow = '0 0 70px white';
+        top1.style.boxShadow = '0 0 70px white';
+        left.style.boxShadow = '0 0 70px white';
+        right.style.boxShadow = '0 0 70px white';
+        bottom.style.boxShadow = '0 0 70px white';
+
+        setTimeout(function() {
+          front.style.opacity = '1';
+          back.style.opacity = '1';
+          top1.style.opacity = '1';
+          left.style.opacity = '1';
+          right.style.opacity = '1';
+          bottom.style.opacity = '1';
+
+        setTimeout(function() {
+            front.style.opacity = '0';
+          back.style.opacity = '0';
+          top1.style.opacity = '0';
+          left.style.opacity = '0';
+          right.style.opacity = '0';
+          bottom.style.opacity = '0';
+        }, 4000); 
+       
+        }, 300);
+        
+      }, 2000);
+
+    });
+  }, 200);
+});
+
+
+$('#start').click(function() {
+  $('#menu').fadeOut(600, function() {
+    scooore = 0;
+    counter = 0;
+    score.innerText = `Your score is 0`;
+    transform2();
+    setTimeout(function() {
+     transform3();
+    setTimeout(function() {
+      $('#stopDice').fadeIn(600);
+    }, 1500);
+     
+    }, 4000);
+   
+
+  });
+});
+
+
+
+$('#stopDice').click(function() {
+   playBtn.disabled = false;
+  cube.style.animationIterationCount = '3';
+  $('#stopDice').fadeOut(600, function() {
+    cube.style.transform = 'rotateY(15deg) rotateZ(-20deg) rotateX(-30deg)';
+    $('#score').fadeIn(1500, function() {
+      $('#play').fadeIn(1100);
+      $('#back7').fadeIn(1100);
+    });
+  });
+});
+
+
+$('#back7').click(function() {
+cube.style.transform = 'rotateY(0deg) rotateZ(0deg) rotateX(0deg)';
+  $('#back7').fadeOut(600);
+  
+  $('#play').fadeOut(600);
+  cube.style.animation = 'spin 4s linear infinite';
+  setTimeout(function() {
+    transform4();
+     front.style.opacity = '0.4';
+          back.style.opacity = '0.4';
+          top1.style.opacity = '0.4';
+          left.style.opacity = '0.4';
+          right.style.opacity = '0.4';
+          bottom.style.opacity = '0.4';
+          $('#score').fadeOut(700);
+    setTimeout(function() {
+      transform();
+      setTimeout(function() {
+        $('#menu').fadeIn(1000);
+      }, 3000);
+    }, 500);
+  }, 3000);
+  
+});
+
+
+$('#play').click(function() {
+  playBtn.disabled = true;
+ if (counter < 3) {
+  let random = Math.floor(Math.random() * 6) + 1;
+  frontP.innerText = `1`;
+  ++counter;
+  scooore+=random;
+  cube.style.transform = 'rotateY(0deg) rotateZ(0deg) rotateX(0deg)';
+  cube.style.animation = `spin 2.1s linear infinite`;
+
+  $('#back7').fadeOut(1000)
+    
+  $('#play').fadeOut(1000);
+
+ 
+  
+  setTimeout(function() {
+    cube.style.animationIterationCount = '2';
+    frontP.innerText = `${random}`;
+    score.innerText = `to win score 11 or more your score is ${scooore}`;
+    playBtn.disabled = false;
+      $('#score').fadeIn(400, function() {
+    $('#play').fadeIn(1000);
+  $('#back7').fadeIn(1000);
+  });
+
+  }, 5000);
+
+  
+  
+ }
+  
+  else if (counter > 2)  {
+    $('#play').fadeOut(500);
+    if (scooore < 11) {
+   score.innerText = `No more turns your score is ${scooore} you lost`;
+    }
+
+    else {
+score.innerText = `No more turns your score is ${scooore} you win`;
+    }
+    
+  }
+
+});
+
+/*************************/
+
+  function transform() {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    if (mediaQuery.matches) {
+    cubeContainer.style.width = '70px';
+    cubeContainer.style.height = '70px';
+    cubeContainer.style.transform = 'translateY(-5vw) translateX(41vw)';
+    front.style.transform = 'rotateX(0deg) translateZ(35px)';
+    back.style.transform = 'rotateX(180deg) translateZ(35px)';
+    left.style.transform = 'rotateY(-90deg) translateZ(35px)';
+    right.style.transform = 'rotateY(90deg) translateZ(35px)';
+    top1.style.transform = 'rotateX(90deg) translateZ(35px)';
+ bottom.style.transform = 'rotateX(-90deg) translateZ(35px)';
+
+
+    }
+
+  else {
+
+    cubeContainer.style.width = '40px';
+    cubeContainer.style.height = '40px';
+    cubeContainer.style.transform = 'translateY(-31vw) translateX(31vw)';
+    front.style.transform = 'rotateX(0deg) translateZ(20px)';
+    back.style.transform = 'rotateX(180deg) translateZ(20px)';
+    left.style.transform = 'rotateY(-90deg) translateZ(20px)';
+    right.style.transform = 'rotateY(90deg) translateZ(20px)';
+    top1.style.transform = 'rotateX(90deg) translateZ(20px)';
+   bottom.style.transform = 'rotateX(-90deg) translateZ(20px)';
+
+  }
+
+  }
+
+
+    function transform2() {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    if (mediaQuery.matches) {
+    cubeContainer.style.width = '200px';
+    cubeContainer.style.height = '200px';
+cubeContainer.style.transform = 'translateY(0) translateX(0)';
+    front.style.transform = 'rotateX(0deg) translateZ(100px)';
+    back.style.transform = 'rotateX(180deg) translateZ(100px)';
+    left.style.transform = 'rotateY(-90deg) translateZ(100px)';
+    right.style.transform = 'rotateY(90deg) translateZ(100px)';
+    top1.style.transform = 'rotateX(90deg) translateZ(100px)';
+ bottom.style.transform = 'rotateX(-90deg) translateZ(100px)';
+  
+    }
+
+  else {
+
+    cubeContainer.style.width = '100px';
+    cubeContainer.style.height = '100px';
+    cubeContainer.style.transform = 'translateY(0) translateX(0)';
+    front.style.transform = 'rotateX(0deg) translateZ(50px)';
+    back.style.transform = 'rotateX(180deg) translateZ(50px)';
+    left.style.transform = 'rotateY(-90deg) translateZ(50px)';
+    right.style.transform = 'rotateY(90deg) translateZ(50px)';
+    top1.style.transform = 'rotateX(90deg) translateZ(50px)';
+   bottom.style.transform = 'rotateX(-90deg) translateZ(50px)';
+  
+  }
+
+  }
+
+  function transform3() {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const faceP = document.querySelectorAll('div.face');
+    $('.face p').fadeIn(300);
+    
+      for (let i=0; i<faceP.length; ++i){
+        faceP[i].style.opacity = '1';
+      faceP[i].style.border = '4px solid white';
+      }   
+
+  }
+
+  function transform4() {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const faceP = document.querySelectorAll('div.face');
+    $('.face p').fadeOut(300);
+    
+      for (let i=0; i<faceP.length; ++i){
+        faceP[i].style.opacity = '1';
+      faceP[i].style.border = '1px solid white';
+      }   
+
+  }
+
+
+
+
+/**************************/
+
+/*
+   setTimeout(function() {
+          transform2();
+          setTimeout(function() {
+            cube.style.animationIterationCount = '4';
+          }, 2000);
+        }, 6000)
+
+                            */
+</script>
+
+</body>
